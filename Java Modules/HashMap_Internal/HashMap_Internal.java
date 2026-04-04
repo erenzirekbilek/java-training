@@ -66,7 +66,7 @@ public class HashMap_Internal {
         System.out.println("\n2. STRUCTURE (Java 8+):");
         System.out.println("   - Uses Node[] array (similar to HashMap)");
         System.out.println("   - Each bucket has synchronized blocks");
-        System.out.println("   - Uses CAS (Compare-And-Swap) for updates");
+        System.out.println("   - Uses CAS (Compare-And-SWAP) for updates");
         System.out.println("   - Tree bins for high-collision buckets");
         
         System.out.println("\n3. LOCKING MECHANISM:");
