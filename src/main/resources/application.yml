@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: java-training
+
+server:
+  port: 8080
+
+external:
+  api:
+    user:
+      base-url: https://jsonplaceholder.typicode.com
+      timeout:
+        connect: 5000
+        read: 10000
+      retry:
+        max-attempts: 3
+        backoff:
+          delay: 1000
+          multiplier: 2
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 30s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+  retry:
+    instances:
+      userService:
+        maxAttempts: 3
+        waitDuration: 2s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+
+logging:
+  level:
+    com.training.client: DEBUG
+    org.springframework.web.client: DEBUG
